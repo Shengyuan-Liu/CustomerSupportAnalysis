@@ -127,7 +127,7 @@
 | 评分项 | 权重 | 本项目的对应措施 |
 |---|---|---|
 | 课程 Python 概念的掌握 | 20% | 各课程知识点均有明确落点（7.9）；展示中每位成员讲解一段核心代码 |
-| 程序功能与质量（模块化、命名、效率、文档） | 20% | 模块化 package、单元测试、README、效率实验 |
+| 程序功能与质量（模块化、命名、效率、文档） | 20% | 模块化 Python 代码、单元测试、README、效率实验 |
 | 数据处理质量与数据洞见 | 20% | RQ1、RQ2 分析结论；标签人工复核；数据边界说明 |
 | 展示效果（清晰度、时间控制、答问） | 20% | 计时排练；问答附录（附录 D） |
 | 可视化质量 | 10% | 统一的 Matplotlib 风格，图表标题直接陈述结论 |
@@ -341,7 +341,7 @@
 
 | 编号 | 交付物 | 内容 | 验收标准 | 负责 | 截止 |
 |---|---|---|---|---|---|
-| D1 | 代码库 | `customer_support_search` package，含数据、特征、分析、检索、等待时间估计、评估等模块 | 按职责模块化；单元测试全部通过；他人可按 README 从零重跑 | 全员（WS1 牵头） | 12/1 |
+| D1 | 代码库 | `tools/` 下按职责组织共享 Python 模块；`notebooks/main.ipynb` 集成最终分析与展示 | 按职责模块化；单元测试全部通过；他人可按 README 从零重跑 | 全员（WS1 牵头） | 12/1 |
 | D2 | RQ1、RQ2 分析结果 | 统计表与图表 | 图表标题陈述结论；标签人工复核的准确率已报告 | WS1、WS2 | 11/15 |
 | D3 | 检索索引与等待时间查找表 | TF-IDF 矩阵、句向量 `.npy` 文件、查找表 CSV | 可由脚本重新生成；配置于 11/17 冻结 | WS3、WS1 | 11/17 |
 | D4 | 评估报告 | 检索指标、估计误差、效率实验、误差分析 | 指标按 7.7 计算；测试集标注完成率 100% | WS2、WS3 | 11/22 |
@@ -531,7 +531,7 @@
 
 | 课程内容 | 在项目中的体现 |
 |---|---|
-| 函数、类、模块化、测试（Lecture 2） | `customer_support_search` package 按 `config`、`data`、`features`、`analysis`、`plotting`、`search`、`estimate`、`evaluation` 模块划分；基于合成数据的 pytest 测试 |
+| 函数、类、模块化、测试（Lecture 2） | `tools/` 按 `config`、`data`、`features`、`analysis`、`plotting`、`search`、`estimate`、`evaluation` 等模块划分；基于合成数据的 pytest 测试 |
 | 程序效率、搜索与排序（Lecture 3） | 前 K 名选取、向量化与循环对比、延迟测量 |
 | 环境与命令行（Lecture 4） | pyproject 安装、依赖版本固定、命令行运行完整流程 |
 | NumPy（Lecture 5） | 相似度矩阵、归一化、`argpartition`、评估指标、bootstrap、按用户划分数据 |
@@ -663,6 +663,8 @@
 3. 每个 Pull Request 须由至少一名其他成员审查通过后合并，合并前本地单元测试须通过；
 4. 提交信息格式：`<类型>: <简述>`，类型包括 `feat`、`fix`、`docs`、`test`、`refactor`；
 5. 原始数据、缓存与大文件（如 `.npy` 索引）不进入仓库，通过 `.gitignore` 排除，由脚本重新生成。
+
+目录职责、个人实验 notebook、`notebooks/main.ipynb` 的集成和 Pull Request 操作流程见 [CONTRIBUTING.md](../CONTRIBUTING.md)。
 
 ### 10.5 完成定义（DoD）
 

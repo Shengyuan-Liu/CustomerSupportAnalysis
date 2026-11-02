@@ -49,11 +49,11 @@
 
 | 项目 | 状态 |
 |---|---|
-| 原始数据 | 已就绪：`data/twcs/twcs.csv`（完整数据），`data/sample.csv`（小样例，可用于开发调试） |
-| 项目文档 | 已就绪：`docs/project_charter.md` |
-| 代码 | 无。前期 EDA 代码不在当前仓库中 |
-| 版本管理 | 未初始化 git，未建立 GitHub 仓库 |
-| 工程配置 | 无 `pyproject.toml`；`README.md` 为空；`.gitignore` 尚未排除 `data/` 与输出文件 |
+| 原始数据 | 本地已就绪：`data/twcs/twcs.csv`（完整数据），`data/sample.csv`（开发小样例）；不进入 Git，下载与结构见 [data/README.md](../data/README.md) |
+| 项目文档 | 已有项目章程与本周计划；详细协作流程见 [CONTRIBUTING.md](../CONTRIBUTING.md) |
+| 代码 | 已建立 `tools/`、`notebooks/`、`tests/` 空骨架；尚无业务实现和测试逻辑。前期 EDA 代码不在当前仓库中 |
+| 版本管理 | 已初始化 Git 并建立 GitHub 仓库；成员邀请、分支保护与看板按 S1-02 继续落实 |
+| 工程配置 | `pyproject.toml` 为占位文件，尚未配置依赖；数据与输出文件由 `.gitignore` 排除；安装、运行说明和环境验证随实现补齐 |
 | 前期结果 | 章程 3.5 的样本漏斗与附录 A 的初步结果，作为本周复现的基准 |
 
 ---
@@ -79,8 +79,8 @@
 | 编号 | 任务 | 交付内容与验收标准 | 优先级 | 截止 | 依赖 | 状态 |
 |---|---|---|---|---|---|---|
 | S1-01 | 提交 proposal | 修正英文语法问题后提交 `DSGA1007Proposal-TwoSeven.pdf`；在群内发送提交确认 | P0 | 11/2 23:59 | — | 未开始 |
-| S1-02 | 建立 GitHub 仓库与任务看板 | 创建私有仓库并邀请全员；`main` 分支设置保护（须经 Pull Request 且至少 1 人审查）；建立 Projects 看板（待办 / 进行中 / 待审查 / 已完成）与标签 `ws1`、`ws2`、`ws3`；本计划全部任务登记为 Issue | P0 | 11/3 启动会前 | — | 未开始 |
-| S1-03 | 搭建工程骨架 | `pyproject.toml`（依赖版本固定：numpy、pandas、pyarrow、matplotlib、langdetect、vaderSentiment、scikit-learn、pytest；sentence-transformers 作为可选依赖）；`src/customer_support_search/` 下建立 `config`、`data`、`features`、`analysis`、`plotting`、`search` 模块占位；`tests/` 含 1 个占位测试；`.gitignore` 增加 `data/`、`outputs/`、`*.parquet`、`*.npy`、`.DS_Store`；README 写明安装、运行与目录说明 | P0 | 11/3 启动会前 | S1-02 | 未开始 |
+| S1-02 | 建立 GitHub 仓库与任务看板 | 仓库已建立；确认私有设置并邀请全员；`main` 分支设置保护（须经 Pull Request 且至少 1 人审查）；建立 Projects 看板（待办 / 进行中 / 待审查 / 已完成）与标签 `ws1`、`ws2`、`ws3`；本计划全部任务登记为 Issue | P0 | 11/3 启动会前 | — | 进行中 |
+| S1-03 | 搭建工程骨架 | 已建立 `tools/` 共享模块、`notebooks/main.ipynb` 与个人实验 notebook、`tests/` 及 `pyproject.toml` 占位；后续固定依赖版本（numpy、pandas、pyarrow、matplotlib、langdetect、vaderSentiment、scikit-learn、pytest；sentence-transformers 为可选依赖），补齐有实际断言的测试与环境验证；保持数据、输出与缓存不入库；README 随实现补齐安装、运行与目录说明。空文件不代表功能或测试已完成 | P0 | 11/3 启动会前 | S1-02 | 进行中 |
 | S1-04 | 组织 Sprint 1 启动会 | 20 分钟线上会议：确认分工、第 5 节数据接口约定、代码规范（章程 10.4）；会议纪要发群 | P0 | 11/3 | S1-02、S1-03 | 未开始 |
 | S1-05 | 组织 11/5 课程反馈会 | 11/4 前确认时间与地点；按章程附录 C 准备 5 分钟讲述：Lucas 讲 Part 01、Part 04 并提问，Weijun 讲 Part 02 数据与可行性，Shujun 讲 Part 03 方法；反馈意见记入章程附录 E | P1 | 11/5 | — | 未开始 |
 | S1-06 | Sprint 1 评审、回顾与 Week 2 计划 | 主持 11/8 周例会：按第 1 节验收标准逐项确认，完成回顾（第 8 节），发布 `week2_sprint_plan.md` | P0 | 11/8 | 全部任务 | 未开始 |
@@ -188,6 +188,8 @@ S1-03 工程骨架（11/3）
 ## 7 工作规范
 
 本周执行章程第 10 节的协作机制，重点如下：
+
+目录职责、个人 notebook 与 `notebooks/main.ipynb` 的集成、分支和 Pull Request 操作流程见 [CONTRIBUTING.md](../CONTRIBUTING.md)。
 
 1. **每日同步：** 每天结束前在小组群内按"已完成 / 下一步 / 阻塞事项"更新，并同步看板上的任务状态。
 2. **一个任务对应一个 Issue 和一个分支：** 分支命名为 `feat/<ws>-<简述>`，例如 `feat/ws1-case-builder`。

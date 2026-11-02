@@ -228,3 +228,10 @@ project_requirements/
 # Keep local datasets out of Git; retain setup instructions.
 /data/*
 !/data/README.md
+
+# Generated analysis outputs: keep only the directory placeholder.
+/outputs/*
+!/outputs/.gitkeep
+*.parquet
+*.npy
+*.npz

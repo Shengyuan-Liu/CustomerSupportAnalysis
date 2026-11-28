@@ -2,12 +2,13 @@
 
 这份文档按 `main.ipynb` 的章节顺序，说明每一部分做了什么、用了什么方法、得到了什么结果。章节名、变量名和列名保持英文，和 notebook 一致，方便对照查找。
 
-最后更新：2026-11-26
+最后更新：2026-11-27
 
 当前状态：
 - 整本 notebook 都已完成：Data Cleaning、RQ1、RQ2、RQ3、Delivered System 和 Conclusion。
 - 2026-11-25 加入 Delivered System 后，从新 kernel 完整重跑了一遍（66 个代码格，没有报错，约 7 分钟）。下面的数字都是这次的结果。
 - 2026-11-26 精简了 notebook 的 Markdown 文字（约 7,600 → 4,500 词）。只改了文字，没有改代码，输出不变。这份文档比 notebook 写得细，一些细节只在这里有。
+- 2026-11-27 删掉了 10 个多余的 `.copy()`，然后从新 kernel 完整重跑（66 个代码格，没有报错，约 7 分钟）。所有输出和之前完全一样，下面的数字不变。
 
 ## 项目概览
 
@@ -32,6 +33,9 @@
   - 不分品牌的图用灰色。
   - 对比图：基准期和随机基线是灰色，事件期和 embedding 是紫色，TF-IDF 是绿色。
   - 虚线：黑色是参考线（0、月初、整体中位数），红色是重点线（截断点、平均差距、相似案例的中位数）。
+- `.copy()`：项目用 pandas 3（Copy-on-Write），筛选或选列得到的表本来就是独立的新表，改它不会影响原表，所以筛选后不写 `.copy()`。只有复制整张表、又不想改动原表时才写：
+  - `cleaned_df = df.copy()`：保留原始数据 `df` 不变。
+  - `SupportAssistant` 里的 `data = library.copy()`：不改动传进来的检索库 `search_cases`。
 
 ## 数据文件
 
@@ -466,3 +470,8 @@ RQ3 问的是：客户问一个新问题时，从历史案例里找相似的案�
     - 改正一处说法：Conclusion 的 RQ1 原来写措辞只改变 “a few percent”，但 Amazon 的 thanks 是 −15.3%，所以改成 “about 15% at most”。RQ1 Summary 和 Findings: Wording 也统一写成最大约 15%（Amazon）和 3%（Apple）。
     - 开头 Delivered System 那段改写成一句短句，意思不变。
     - 改写后，文字里的说法都对照输出重新核对过。例如等待时间表里 Apple 高峰期 24 个小时都比平时慢，Amazon 高峰期 23 个小时比平时快。
+- 2026-11-27
+  - 删掉 10 个多余的 `.copy()`：Data Cleaning 4 个（`find_related_brands()` 里 2 个，去掉长等待和最后 24 小时案例那一格 2 个），RQ2 每天消息数那一格 3 个，RQ3 选首次提问那一格 2 个、`clean_text` 那一格 1 个。
+    - 原因：它们都在筛选或选列之后。项目用 pandas 3（`requirements.txt` 是 3.1.0），筛选结果本来就是独立的新表，不写 `.copy()` 也不会改到原表，也不会出现 pandas 2 的 `SettingWithCopyWarning`。
+    - 保留复制整张表的 2 个：`cleaned_df = df.copy()` 和 `SupportAssistant` 里的 `data = library.copy()`，用法和 lab 8 一样（不想改动原来的表）。
+  - 从新 kernel 完整重跑整本 notebook：66 个代码格，没有报错，约 7 分钟；清理输出的做法和之前一样。逐格对比改动前的输出（文字、表格和图），66 个代码格完全一样，包括改过的 5 格；只有语言检测进度条的用时不同（6:08 → 6:10）。
